@@ -5,16 +5,17 @@ import {
   getJobById,
   runJob,
   deleteJob,
-  resetJobs
+  resetJobs,
 } from "../controllers/jobs.controller.js";
 
 const router = express.Router();
 
-router.post("/jobs", createJob);
-router.get("/jobs", getJobs);
-router.get("/jobs/:id", getJobById);
+// 👇 NO /jobs HERE
+router.post("/", createJob);
+router.get("/", getJobs);
+router.get("/:id", getJobById);
 router.post("/run-job/:id", runJob);
-router.delete("/jobs/:id", deleteJob);
-router.delete("/jobs", resetJobs);
+router.delete("/:id", deleteJob);
+router.delete("/", resetJobs);
 
 export default router;
