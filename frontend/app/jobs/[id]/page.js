@@ -1,4 +1,3 @@
-export const dynamic = "force-static";
 "use client";
 
 import { useEffect, useState } from "react";
@@ -8,6 +7,7 @@ export default function JobDetail() {
   const { id } = useParams();
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (!id) return;
@@ -25,6 +25,7 @@ export default function JobDetail() {
       })
       .catch((err) => {
         console.error(err);
+        setError("Failed to load job");
         setLoading(false);
       });
   }, [id]);
@@ -33,8 +34,8 @@ export default function JobDetail() {
     return <p className="p-6">Loading job details...</p>;
   }
 
-  if (!job) {
-    return <p className="p-6 text-red-600">Job not found</p>;
+  if (error) {
+    return <p className="p-6 text-red-600">{error}</p>;
   }
 
   return (
