@@ -3,31 +3,28 @@
 import { useEffect, useState } from "react";
 import CreateJobForm from "../components/CreateJobForm";
 import JobTable from "../components/JobTable";
+import { getJobs, resetJobs } from "../lib/api";
 
 export default function Home() {
   const [jobs, setJobs] = useState([]);
+  const [error, setError] = useState("");
 
   const fetchJobs = async () => {
-    const res = await fetch("http://localhost:5000/jobs");
-    const data = await res.json();
-    setJobs(Array.isArray(data) ? data : []);
+    try {
+      const data = await getJobs();
+      setJobs(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error(err);
+      setError("Failed to fetch jobs");
+    }
   };
 
-  // 🔁 auto refresh every 2 seconds
   useEffect(() => {
     fetchJobs();
-    const interval = setInterval(fetchJobs, 2000);
-    return () => clearInterval(interval);
   }, []);
 
-  // 🔥 RESET ALL JOBS
-  const resetJobs = async () => {
-    if (!confirm("Are you sure you want to delete all jobs?")) return;
-
-    await fetch("http://localhost:5000/jobs", {
-      method: "DELETE",
-    });
-
+  const handleReset = async () => {
+    await resetJobs();
     fetchJobs();
   };
 
@@ -37,18 +34,14 @@ export default function Home() {
 
       <CreateJobForm onCreated={fetchJobs} />
 
-      <div className="flex gap-4">
-        <select className="border px-2 py-1 rounded">
-          <option>All</option>
-        </select>
+      {error && <p className="text-red-600">{error}</p>}
 
-        <button
-          onClick={resetJobs}
-          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
-        >
-          Reset Jobs
-        </button>
-      </div>
+      <button
+        onClick={handleReset}
+        className="bg-red-600 text-white px-4 py-2 rounded"
+      >
+        Reset Jobs
+      </button>
 
       <JobTable jobs={jobs} onRefresh={fetchJobs} />
     </div>
