@@ -1,17 +1,15 @@
-require("./db/database");
-const express = require("express");
-const cors = require("cors");
+import express from "express";
+import cors from "cors";
+import jobsRoutes from "./routes/jobs.routes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(cors()); // ✅ VERY IMPORTANT
 app.use(express.json());
 
-app.get("/health", (req, res) => {
-  res.json({
-    status: "OK",
-    message: "Backend running successfully"
-  });
-});
+app.use("/", jobsRoutes);
 
-module.exports = app;
+const PORT = 5000;
+app.listen(PORT, () => {
+  console.log(`Backend running on http://localhost:${PORT}`);
+});

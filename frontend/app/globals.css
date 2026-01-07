@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Simple safe defaults */
+body {
+  background-color: #f3f4f6; /* gray-100 */
+  color: #111827; /* gray-900 */
+  font-family: system-ui, sans-serif;
+}
+
+input, select, textarea {
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+
+button {
+  border-radius: 6px;
+  cursor: pointer;
+}
