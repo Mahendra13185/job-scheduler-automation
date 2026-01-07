@@ -12,7 +12,7 @@ export default function JobDetail() {
   useEffect(() => {
     if (!id) return;
 
-    fetch(`http://localhost:5000/jobs/${id}`)
+    fetch(`https://job-scheduler-automation-backend.onrender.com/jobs/${id}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error("Job not found");

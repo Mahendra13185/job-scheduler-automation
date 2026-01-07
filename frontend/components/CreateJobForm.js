@@ -29,7 +29,7 @@ export default function CreateJobForm({ onCreated }) {
     try {
       setLoading(true);
 
-      const res = await fetch("http://localhost:5000/jobs", {
+      const res = await fetch("https://job-scheduler-automation-backend.onrender.com/jobs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function JobTable({ jobs = [], onRefresh }) {
   // ▶ RUN JOB
   const runJob = async (id) => {
-    await fetch(`http://localhost:5000/run-job/${id}`, {
+    await fetch(`https://job-scheduler-automation-backend.onrender.com/run-job/${id}`, {
       method: "POST",
     });
     onRefresh();
@@ -15,7 +15,7 @@ export default function JobTable({ jobs = [], onRefresh }) {
   const deleteJob = async (id) => {
     if (!confirm("Delete this job?")) return;
 
-    await fetch(`http://localhost:5000/jobs/${id}`, {
+    await fetch(`https://job-scheduler-automation-backend.onrender.comjobs/${id}`, {
       method: "DELETE",
     });
 
