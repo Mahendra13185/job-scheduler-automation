@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { createJob } from "../lib/api";
 
 export default function CreateJobForm({ onCreated }) {
   const [taskName, setTaskName] = useState("");
@@ -29,20 +30,11 @@ export default function CreateJobForm({ onCreated }) {
     try {
       setLoading(true);
 
-      const res = await fetch("https://job-scheduler-automation-backend.onrender.com/jobs", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          taskName,
-          priority,
-          payload: parsedPayload,
-        }),
+      await createJob({
+        taskName,
+        priority,
+        payload: parsedPayload,
       });
-
-      if (!res.ok) {
-        const data = await res.json();
-        throw new Error(data.message || "Failed to create job");
-      }
 
       // Reset form
       setTaskName("");
@@ -51,7 +43,7 @@ export default function CreateJobForm({ onCreated }) {
 
       onCreated && onCreated();
     } catch (err) {
-      setError(err.message);
+      setError(err.message || "Failed to create job");
     } finally {
       setLoading(false);
     }
