@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
@@ -14,17 +16,14 @@ export default function JobDetail() {
 
     fetch(`https://job-scheduler-automation-backend.onrender.com/jobs/${id}`)
       .then((res) => {
-        if (!res.ok) {
-          throw new Error("Job not found");
-        }
+        if (!res.ok) throw new Error("Job not found");
         return res.json();
       })
       .then((data) => {
         setJob(data);
         setLoading(false);
       })
-      .catch((err) => {
-        console.error(err);
+      .catch(() => {
         setError("Failed to load job");
         setLoading(false);
       });
