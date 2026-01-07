@@ -4,7 +4,15 @@ import jobsRoutes from "./routes/jobs.routes.js";
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://job-scheduler-automation.vercel.app"
+    ],
+  })
+);
+
 app.use(express.json());
 
 // API routes
