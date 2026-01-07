@@ -1,30 +1,23 @@
 "use client";
 
 import Link from "next/link";
+import { runJob, deleteJob } from "../lib/api";
 
 export default function JobTable({ jobs = [], onRefresh }) {
-  // ▶ RUN JOB
-  const runJob = async (id) => {
-    await fetch(`https://job-scheduler-automation-backend.onrender.com/run-job/${id}`, {
-      method: "POST",
-    });
-    onRefresh();
-  };
-
-  // ❌ DELETE SINGLE JOB
-  const deleteJob = async (id) => {
-    if (!confirm("Delete this job?")) return;
-
-    await fetch(`https://job-scheduler-automation-backend.onrender.comjobs/${id}`, {
-      method: "DELETE",
-    });
-
-    onRefresh();
-  };
-
   if (!Array.isArray(jobs)) {
     return <p className="text-red-600">Jobs data invalid</p>;
   }
+
+  const handleRun = async (id) => {
+    await runJob(id);
+    onRefresh();
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this job?")) return;
+    await deleteJob(id);
+    onRefresh();
+  };
 
   return (
     <table className="w-full border">
@@ -53,14 +46,14 @@ export default function JobTable({ jobs = [], onRefresh }) {
               </Link>
 
               <button
-                onClick={() => runJob(job.id)}
+                onClick={() => handleRun(job.id)}
                 className="bg-green-600 text-white px-2 py-1 rounded"
               >
                 Run
               </button>
 
               <button
-                onClick={() => deleteJob(job.id)}
+                onClick={() => handleDelete(job.id)}
                 className="bg-red-600 text-white px-2 py-1 rounded"
               >
                 Delete
