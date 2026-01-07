@@ -1,4 +1,5 @@
-const BASE = "http://localhost:5000";
+const BASE_URL = "https://job-scheduler-automation-backend.onrender.com";
+
 
 export const getJobs = async (params = {}) => {
   const q = new URLSearchParams(params).toString();
