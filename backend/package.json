@@ -1,18 +1,10 @@
 {
-  "name": "backend",
+  "name": "job-scheduler-backend",
   "version": "1.0.0",
-  "main": "index.js",
   "type": "module",
   "scripts": {
-    "build": "next build",
-    "export": "next export",
-     "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "node src/server.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "axios": "^1.13.2",
     "cors": "^2.8.5",
@@ -20,8 +12,5 @@
     "express": "^5.2.1",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
-  },
-  "devDependencies": {
-    "nodemon": "^3.1.11"
   }
 }
